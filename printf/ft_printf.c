@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: muhaoz <muhaoz@student.42kocaeli.com.tr    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/05/12 15:34:32 by muhaoz            #+#    #+#             */
+/*   Updated: 2026/05/12 15:36:21 by muhaoz           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "ft_printf.h"
 
 static int	cheat_putchar(char c)
@@ -95,6 +107,8 @@ int	ft_printf(const char *s, ...)
 	va_start(ap, s);
 	i = 0;
 	len = 0;
+	if(!s)
+		return(va_end(ap), -1);
 	while (s[i])
 	{
 		if (s[i] == '%' && s[i + 1])
