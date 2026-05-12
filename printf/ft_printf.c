@@ -6,16 +6,11 @@
 /*   By: muhaoz <muhaoz@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 15:34:32 by muhaoz            #+#    #+#             */
-/*   Updated: 2026/05/12 15:36:21 by muhaoz           ###   ########.fr       */
+/*   Updated: 2026/05/12 15:49:09 by muhaoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-
-static int	cheat_putchar(char c)
-{
-	return (write(1, &c, 1));
-}
 
 static int	cheat_putstr(char *s)
 {
@@ -25,76 +20,66 @@ static int	cheat_putstr(char *s)
 		return (write(1, "(null)", 6));
 	i = 0;
 	while (s[i])
-		i += cheat_putchar(s[i]);
+	{
+		write(1, &s[i], 1);
+		i++;
+	}
 	return (i);
 }
 
-static int	cheat_number_spit(long n)
-{
-	int		len;
-	char	g;
-
-	len = 0;
-	if (n < 0)
-	{
-		len += cheat_putchar('-');
-		n = -n;
-	}
-	if (n >= 10)
-		len += cheat_number_spit(n / 10);
-	g = (char)((n % 10) + '0');
-	len += cheat_putchar(g);
-	return (len);
-}
-
-static int	cheat_unholy_unsigned(unsigned int x)
-{
-	int		len;
-	char	h;
-
-	len = 0;
-	if (x >= 10)
-		len += cheat_unholy_unsigned(x / 10);
-	h = (char)((x % 10) + '0');
-	len += cheat_putchar(h);
-	return (len);
-}
-
-static int	cheat_hex_magic(unsigned long o, char *b)
+static int	cheat_hex_magic(unsigned long n, char *b, unsigned int blen)
 {
 	int	len;
 
 	len = 0;
-	if (o >= 16)
-		len += cheat_hex_magic(o / 16, b);
-	len += cheat_putchar(b[o % 16]);
+	if (n >= blen)
+		len += cheat_hex_magic(n / blen, b, blen);
+	len += write(1, &b[n % blen], 1);
 	return (len);
 }
 
-static int	cheat_summon(char token, va_list ap)
+static int	cheat_number_spit(int n)
 {
-	if (token == CH_C)
-		return (cheat_putchar(va_arg(ap, int)));
-	if (token == CH_S)
-		return (cheat_putstr(va_arg(ap, char *)));
-	if (token == CH_D || token == CH_I)
-		return (cheat_number_spit(va_arg(ap, int)));
-	if (token == CH_U)
-		return (cheat_unholy_unsigned(va_arg(ap, unsigned int)));
-	if (token == CH_X)
-		return (cheat_hex_magic(va_arg(ap, unsigned int),
-				"0123456789abcdef"));
-	if (token == CH_XX)
-		return (cheat_hex_magic(va_arg(ap, unsigned int),
-				"0123456789ABCDEF"));
-	if (token == CH_P)
+	int		len;
+	long	num;
+
+	len = 0;
+	num = n;
+	if (num < 0)
 	{
-		write(1, "0x", 2);
-		return (2 + cheat_hex_magic((unsigned long)va_arg(ap, void *),
-				"0123456789abcdef"));
+		len += write(1, "-", 1);
+		num = -num;
 	}
-	if (token == CH_PERCENT)
-		return (cheat_putchar('%'));
+	len += cheat_hex_magic(num, "0123456789", 10);
+	return (len);
+}
+
+static int	cheat_summon(char t, va_list ap)
+{
+	char	c;
+
+	if (t == 'c')
+	{
+		c = (char)va_arg(ap, int);
+		return (write(1, &c, 1));
+	}
+	if (t == 's')
+		return (cheat_putstr(va_arg(ap, char *)));
+	if (t == 'p')
+		return (write(1, "0x", 2) + cheat_hex_magic(
+				(unsigned long)va_arg(ap, void *), "0123456789abcdef", 16));
+	if (t == 'd' || t == 'i')
+		return (cheat_number_spit(va_arg(ap, int)));
+	if (t == 'u')
+		return (cheat_hex_magic(va_arg(ap, unsigned int), "0123456789", 10));
+	if (t == 'x')
+		return (cheat_hex_magic(va_arg(ap, unsigned int),
+				"0123456789abcdef", 16));
+	if (t == 'X')
+		return (cheat_hex_magic(va_arg(ap, unsigned int),
+				"0123456789ABCDEF", 16));
+	if (t == '%')
+		return (write(1, "%", 1));
 	return (0);
 }
 
@@ -104,24 +89,28 @@ int	ft_printf(const char *s, ...)
 	int		i;
 	int		len;
 
+	if (!s)
+		return (-1);
 	va_start(ap, s);
 	i = 0;
 	len = 0;
-	if(!s)
-		return(va_end(ap), -1);
 	while (s[i])
 	{
-		if (s[i] == '%' && s[i + 1])
+		if (s[i] == '%')
 		{
+			if (!s[i + 1])
+			{
+				len = -1;
+				break ;
+			}
 			len += cheat_summon(s[i + 1], ap);
-			i += 2;
-		}
-		else
-		{
-			len += cheat_putchar(s[i]);
 			i++;
 		}
+		else
+			len += write(1, &s[i], 1);
+		i++;
 	}
 	va_end(ap);
 	return (len);
 }
+
