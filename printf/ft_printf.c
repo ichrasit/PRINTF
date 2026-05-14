@@ -6,7 +6,7 @@
 /*   By: muhaoz <muhaoz@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/12 15:34:32 by muhaoz            #+#    #+#             */
-/*   Updated: 2026/05/12 16:05:08 by muhaoz           ###   ########.fr       */
+/*   Updated: 2026/05/14 18:04:14 by muhaoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int	ft_printf(const char *s, ...)
 	int		len;
 
 	if (!s)
-		return (-1);
+		return (va_end(ap), -1);
 	va_start(ap, s);
 	i = -1;
 	len = 0;

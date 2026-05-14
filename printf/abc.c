@@ -1,6 +1,6 @@
 #include <stdarg.h>
 #include <stdio.h>
-
+#include <stdlib.h>
 
 // void    function(int count, ...)
 // {
@@ -42,7 +42,8 @@ char    *strjoiner(char *first, ...)
     char *tmp;
     int len = 0;
     int i =0;
-
+    va_start(ap, first);
+    tmp = first;
     while(tmp)
     {
         len += strlenght(tmp);
@@ -54,12 +55,24 @@ char    *strjoiner(char *first, ...)
         return NULL;
 
     va_start(ap ,first);
-    
+    tmp = first;
     while(tmp)
     {
         int j = 0;
-        while(j)
+        while(tmp[j])
+            str[i++] = tmp[j++];
+        tmp = va_arg(ap, char *);
     }
+    str[i] = '\0';
+    va_end(ap);
+    return str;
 
 
+}
+
+int main()
+{
+    char *s = strjoiner("selam ", "kızlar ", "sikim ", "sızlar", NULL);
+    printf("%s\n", s);
+    free(s);
 }
