@@ -17,7 +17,9 @@ static int	cheat_putstr(char *s)
 	int	i;
 
 	if (!s)
+	{
 		return (write(1, "(null)", 6));
+	}
 	i = 0;
 	while (s[i])
 	{
@@ -58,32 +60,32 @@ static int	cheat_number_spit(int n)
 	return (len);
 }
 
-static int	cheat_summon(char t, va_list ap)
+static int	cheat_summon(char t, va_list *ap)
 {
 	unsigned long	p;
 
 	if (t == 'c')
 	{
-		t = (char)va_arg(ap, int);
+		t = (char)va_arg(*ap, int);
 		return (write(1, &t, 1));
 	}
 	if (t == 's')
-		return (cheat_putstr(va_arg(ap, char *)));
+		return (cheat_putstr(va_arg(*ap, char *)));
 	if (t == 'p')
 	{
-		p = (unsigned long)va_arg(ap, void *);
+		p = (unsigned long)va_arg(*ap, void *);
 		if (!p)
 			return (write(1, "(nil)", 5));
 		return (write(1, "0x", 2) + cheat_hex_magic(p, "0123456789abcdef"));
 	}
 	if (t == 'd' || t == 'i')
-		return (cheat_number_spit(va_arg(ap, int)));
+		return (cheat_number_spit(va_arg(*ap, int)));
 	if (t == 'u')
-		return (cheat_hex_magic(va_arg(ap, unsigned int), "0123456789"));
+		return (cheat_hex_magic(va_arg(*ap, unsigned int), "0123456789"));
 	if (t == 'x')
-		return (cheat_hex_magic(va_arg(ap, unsigned int), "0123456789abcdef"));
+		return (cheat_hex_magic(va_arg(*ap, unsigned int), "0123456789abcdef"));
 	if (t == 'X')
-		return (cheat_hex_magic(va_arg(ap, unsigned int), "0123456789ABCDEF"));
+		return (cheat_hex_magic(va_arg(*ap, unsigned int), "0123456789ABCDEF"));
 	return (0);
 }
 
@@ -107,7 +109,7 @@ int	ft_printf(const char *s, ...)
 		else if (s[i] == '%')
 			len += write(1, "%", 1);
 		else
-			len += cheat_summon(s[i], ap);
+			len += cheat_summon(s[i], &ap);
 	}
 	return (va_end(ap), len);
 }
