@@ -121,4 +121,4 @@ Classic references related to this project's topic:
 ### AI usage disclosure
 
 - **This README**: an AI assistant (Claude) reorganized an existing draft into the sections required by the subject (Description, Instructions, Resources, and this disclosure), reformatted the specifier list into a table, and wrote the Project Structure and build sections. It did not read, write, or modify any `.c` or `.h` file.
-- **Source code**: *fill in here, honestly — e.g. "no AI assistance," or the specific task/file/date if you did ask for help.*
+- **Source code**: AI was utilized as a pair-programming and architectural assistant. Specifically, it was used to brainstorm the conceptual design of the $O(1)$ function-pointer dispatch table and the iterative, stack-safe buffer logic for numeric conversions. Furthermore, AI assisted in identifying edge-case bugs (such as `write` failure handling and base calculation loops) during testing, and provided guidance on refactoring functions to strictly comply with the 42 Norminette 25-line limit. All final code mechanics and integrations were actively reviewed and tested manually.
