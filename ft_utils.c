@@ -10,7 +10,7 @@ int ft_print_num(unsigned long n, char *base)
     i = 0;
     len = 0;
     blen = 0;
-    while(base[len])
+    while(base[blen])
         blen++;
     if(n == 0)
         return (write(1, &base[0], 1));
