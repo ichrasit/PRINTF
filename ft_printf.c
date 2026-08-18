@@ -11,6 +11,12 @@ static void init_table(t_fmt_func *t)
         t[i] = NULL;
         i++;
     }
+    t['c'] = handle_c;
+    t['s'] = handle_s;
+    t['%'] = handle_pct;
+    t['d'] = handle_d;
+    t['i'] = handle_d;
+    t['u'] = handle_u;
 }
 
 static int  process_format(const char **f, va_list args, t_fmt_func *t)
