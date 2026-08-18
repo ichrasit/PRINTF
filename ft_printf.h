@@ -3,8 +3,10 @@
 
 # include <stdarg.h>
 # include <unistd.h>
-# include <stdint.h>
+# include <stdlib.h>
 
-int		ft_printf(const char *s, ...);
+typedef int	(*t_fmt_func)(va_list);
+
+int	ft_printf(const char *format, ...);
 
 #endif
