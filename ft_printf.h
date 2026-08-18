@@ -6,7 +6,7 @@
 /*   By: muhaoz <muhaoz@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 02:11:53 by muhaoz            #+#    #+#             */
-/*   Updated: 2026/08/19 02:12:25 by muhaoz           ###   ########.fr       */
+/*   Updated: 2026/08/19 02:40:50 by muhaoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
 
 typedef int	(*t_fmt_func)(va_list);
 
-int			ft_printf(const char *format, ...);
+int			ft_printf(const char *format, ...) __attribute__((format(printf, 1,
+						2)));
 int			handle_c(va_list args);
 int			handle_s(va_list args);
 int			handle_pct(va_list args);

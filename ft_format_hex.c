@@ -6,7 +6,7 @@
 /*   By: muhaoz <muhaoz@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 02:11:42 by muhaoz            #+#    #+#             */
-/*   Updated: 2026/08/19 02:12:16 by muhaoz           ###   ########.fr       */
+/*   Updated: 2026/08/19 02:43:18 by muhaoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,17 @@ int	handle_x_up(va_list args)
 int	handle_p(va_list args)
 {
 	unsigned long	p;
+	int				tmp1;
+	int				tmp2;
 
 	p = (unsigned long)va_arg(args, void *);
 	if (!p)
 		return (write(1, "(nil)", 5));
-	return (write(1, "0x", 2) + ft_print_num(p, "0123456789abcdef"));
+	tmp1 = write(1, "0x", 2);
+	if (tmp1 == -1)
+		return (-1);
+	tmp2 = ft_print_num(p, "0123456789abcdef");
+	if (tmp2 == -1)
+		return (-1);
+	return (tmp1 + tmp2);
 }

@@ -6,7 +6,7 @@
 /*   By: muhaoz <muhaoz@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 02:11:51 by muhaoz            #+#    #+#             */
-/*   Updated: 2026/08/19 02:14:09 by muhaoz           ###   ########.fr       */
+/*   Updated: 2026/08/19 02:42:20 by muhaoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,12 @@ static int	print_all(const char *f, va_list args, t_fmt_func *t)
 	while (*f)
 	{
 		if (*f != '%')
-			total += write(1, f++, 1);
+		{
+			tmp = write(1, f++, 1);
+			if (tmp == -1)
+				return (-1);
+			total += tmp;
+		}
 		else
 		{
 			tmp = process_format(&f, args, t);
