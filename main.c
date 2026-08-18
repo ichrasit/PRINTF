@@ -2,6 +2,9 @@
 #include <stdio.h>
 
 int main(){
-	printf("Null pointer : %p\n", NULL);
-	ft_printf("Null pointer : %p", NULL);
+
+	printf("Uzunluk %d\n : ", printf("'\0'"));
+	ft_printf("Uzunluk %d\n : ", ft_printf("'\0'"));
+
+
 }
