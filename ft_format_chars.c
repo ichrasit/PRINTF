@@ -6,7 +6,7 @@
 /*   By: muhaoz <muhaoz@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 02:11:37 by muhaoz            #+#    #+#             */
-/*   Updated: 2026/08/19 02:12:12 by muhaoz           ###   ########.fr       */
+/*   Updated: 2026/08/21 06:26:36 by muhaoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	handle_c(va_list args)
 
 int	handle_s(va_list args)
 {
-	char	*s;
 	int		len;
+	char	*s;
 
 	s = va_arg(args, char *);
 	if (!s)

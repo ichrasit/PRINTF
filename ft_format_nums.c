@@ -6,7 +6,7 @@
 /*   By: muhaoz <muhaoz@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 02:11:48 by muhaoz            #+#    #+#             */
-/*   Updated: 2026/08/19 02:40:45 by muhaoz           ###   ########.fr       */
+/*   Updated: 2026/08/21 06:28:15 by muhaoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	handle_d(va_list args)
 {
-	long	n;
-	int		tmp1;
-	int		tmp2;
+	int	tmp1;
+	int	tmp2;
+	int	n;
 
 	n = va_arg(args, int);
 	if (n < 0)
@@ -24,7 +24,7 @@ int	handle_d(va_list args)
 		tmp1 = write(1, "-", 1);
 		if (tmp1 == -1)
 			return (-1);
-		tmp2 = ft_print_num(-n, "0123456789");
+		tmp2 = ft_print_num(-(long)n, "0123456789");
 		if (tmp2 == -1)
 			return (-1);
 		return (tmp1 + tmp2);

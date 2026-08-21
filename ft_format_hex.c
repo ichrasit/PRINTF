@@ -6,7 +6,7 @@
 /*   By: muhaoz <muhaoz@student.42kocaeli.com.tr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/08/19 02:11:42 by muhaoz            #+#    #+#             */
-/*   Updated: 2026/08/19 02:43:18 by muhaoz           ###   ########.fr       */
+/*   Updated: 2026/08/21 06:28:12 by muhaoz           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ int	handle_x_up(va_list args)
 
 int	handle_p(va_list args)
 {
-	unsigned long	p;
 	int				tmp1;
 	int				tmp2;
+	unsigned long	p;
 
 	p = (unsigned long)va_arg(args, void *);
 	if (!p)
